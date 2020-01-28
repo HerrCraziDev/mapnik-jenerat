@@ -1,0 +1,16 @@
+<Map background-color="#eeee77" srs="+proj=longlat +ellps=WGS84 +datum=WGS84">
+    <Style name="test">
+        <Rule>
+            <PolygonSymbolizer fill="#bb4030" />
+            <LineSymbolizer stroke="#eeee77" stroke-width="1" />
+        </Rule>
+    </Style>
+
+    <Layer name="world">
+        <StyleName>test</StyleName>
+        <Datasource>
+            <Parameter name="type">shape</Parameter>
+            <Parameter name="file">ne_110m_admin_0_countries.shp</Parameter>
+        </Datasource>
+    </Layer>
+</Map>

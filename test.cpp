@@ -9,8 +9,8 @@
 #include <mapnik/datasource_cache.hpp>
 
 
-#define WIDTH 16000
-#define HEIGHT 7000
+#define WIDTH 1600
+#define HEIGHT 700
 
 
 main()

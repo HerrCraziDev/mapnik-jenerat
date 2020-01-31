@@ -4,7 +4,7 @@ LDARGS=-lmapnik -licuuc -std=c++14
 
 
 all: test update
-	@echo "\e[94;1mautomake: done ($(shell date +%T))"
+	@echo "\e[94;1mautomake: done ($(shell date +%T))\e[0m"
 
 test: test.cpp
 	@echo Building...

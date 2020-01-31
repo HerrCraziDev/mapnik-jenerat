@@ -1,6 +1,7 @@
 
 
 #include <mapnik/map.hpp>
+#include <mapnik/layer.hpp>
 #include <mapnik/load_map.hpp>
 #include <mapnik/agg_renderer.hpp>
 #include <mapnik/image.hpp>
@@ -31,7 +32,9 @@ main()
 
     //-501503.342579 6172710.437684 -496458.498712 6170111.578722
     //-501013.2,6170139.6 : -497558.1,6172988.6
-    m.zoom_to_box(mapnik::box2d<double>(-471920.2, 6091823.2, -442437.7, 6109042.6));
+    m.zoom_to_box(mapnik::box2d<double>(-518535.5, 6147162.1, -503794.3, 6155771.8));
+
+    // m.layers()[0].
     std::cout << "Scale: 1:" << m.scale() << "\n";
     // m.zoom_all();
 

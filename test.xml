@@ -178,7 +178,7 @@
 
         <Datasource>
             <Parameter name="type">shape</Parameter>
-            <Parameter name="file">finistere/multipolygons.shp</Parameter>
+            <Parameter name="file">maps/finistere/multipolygons.shp</Parameter>
         </Datasource>
     </Layer>
 
@@ -191,7 +191,7 @@
         <StyleName>roads-national</StyleName>
         <Datasource>
             <Parameter name="type">shape</Parameter>
-            <Parameter name="file">finistere/lines.shp</Parameter>
+            <Parameter name="file">maps/finistere/lines.shp</Parameter>
         </Datasource>
     </Layer>
 </Map>

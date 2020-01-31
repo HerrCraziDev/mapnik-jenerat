@@ -1,16 +1,197 @@
-<Map background-color="#eeee77" srs="+proj=longlat +ellps=WGS84 +datum=WGS84">
-    <Style name="test">
+<Map background-color="#acf" srs="+proj=merc" >
+<!-- <Map background-color="#efd" srs="+proj=lonlat"> -->
+    <Style name="areas">
         <Rule>
-            <PolygonSymbolizer fill="#bb4030" />
-            <LineSymbolizer stroke="#eeee77" stroke-width="1" />
+            <PolygonSymbolizer fill="#ebe9dc" />
         </Rule>
     </Style>
 
-    <Layer name="world">
-        <StyleName>test</StyleName>
+    <Style name="land-use">
+        <Rule>
+            <Filter>[landuse] = residential</Filter>
+            <PolygonSymbolizer fill="#ddd"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[landuse] = farmland</Filter>
+            <PolygonSymbolizer fill='#c7deb4'/>
+        </Rule>
+
+        <Rule>
+            <Filter>[natural] = heath</Filter>
+            <PolygonSymbolizer fill="#cbd1af"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[landuse] = forest or [natural] = wood</Filter>
+            <PolygonSymbolizer fill="#98b797"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[natural] = beach</Filter>
+            <PolygonSymbolizer fill="#ffb"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[natural] = wetland</Filter>
+            <PolygonSymbolizer fill="#cdc"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[landuse] = military</Filter>
+            <PolygonSymbolizer fill="#faa5"/>
+            <LineSymbolizer stroke="#a44" stroke-width="2"/>
+        </Rule>
+    </Style>
+
+    <Style name="lines">
+        <Rule>
+            <LineSymbolizer stroke="#444444" stroke-width="1" />
+        </Rule>
+    </Style>
+
+    <Style name="waterway-lines">
+        <Rule>
+            <Filter>[waterway] = river</Filter>
+            <LineSymbolizer stroke="#79b" stroke-width="4"/>
+        </Rule>
+        
+        <Rule>
+            <Filter>[waterway] = stream or [waterway] = drain</Filter>
+            <LineSymbolizer stroke="#acf" stroke-width="4"/>
+        </Rule>
+    </Style>
+
+    <Style name="water">
+        <Rule>
+            <Filter>[natural] = water or [other_tags].match('waterway')</Filter>
+            <PolygonSymbolizer fill="#acf"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[natural] = bay or [natural] = strait or [natural] = gulf</Filter>
+            <PolygonSymbolizer fill="#acf"/>
+        </Rule>
+    </Style>
+
+    <Style name="roads-paths">
+        <Rule>
+            <Filter>[highway] = 'track'</Filter>
+            <LineSymbolizer stroke="#eed" stroke-width="3"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[highway] = 'path' or [highway] = footway</Filter>
+            <LineSymbolizer stroke="#eed" stroke-width="3"/>
+        </Rule>
+    </Style>
+    
+    <Style name="roads-misc">
+        <Rule>
+            <Filter>[highway] = 'unclassified'</Filter>
+            <LineSymbolizer stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[highway] = 'service'</Filter>
+            <LineSymbolizer stroke="#fff" stroke-width = "3" stroke-linecap="round"/>
+        </Rule>
+        <Rule>
+            <Filter>[highway] = 'tertiary' or [highway] = 'residential' or [highway] = 'living_street'</Filter>
+            <LineSymbolizer stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+        </Rule>
+    </Style>
+
+    <Style name="roads-national">
+        <Rule>
+            <Filter>[highway] = 'secondary'</Filter>
+            <LineSymbolizer stroke="#ff8" stroke-width="6"/>
+        </Rule>
+    </Style>
+
+    <Style name="roads-outline">
+        <Rule>
+            <Filter>[highway] = 'path' or [highway] = footway</Filter>
+            <LineSymbolizer stroke="#a95" stroke-width="4"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[highway] = 'track'</Filter>
+            <LineSymbolizer stroke="#a95" stroke-width="4"/>
+        </Rule>
+        
+        <Rule>
+            <Filter>[highway] = 'unclassified'</Filter>
+            <LineSymbolizer stroke="#000" stroke-width="5" stroke-linecap="round"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[highway] = 'tertiary' or [highway] = 'residential' or [highway] = 'living_street'</Filter>
+            <LineSymbolizer stroke="#000" stroke-width="6" stroke-linecap="round"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[highway] = 'secondary'</Filter>
+            <LineSymbolizer stroke="#a90" stroke-width="7" stroke-linecap="round"/>
+        </Rule>
+    </Style>
+
+    <Style name="buildings">
+        <Rule>
+            <Filter>[building] = 'yes'</Filter>
+            <PolygonSymbolizer fill="#999" />
+            <LineSymbolizer stroke="#666" stroke-width="1"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[building] = 'church'</Filter>
+            <PolygonSymbolizer fill="#a97" />
+            <LineSymbolizer stroke="#775" stroke-width="1"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[historic] = 'fort'</Filter>
+            <PolygonSymbolizer fill="#aa9" />
+            <LineSymbolizer stroke="#775" stroke-width="3"/>
+        </Rule>
+
+        <Rule>
+            <Filter>[building] = 'school'</Filter>
+            <PolygonSymbolizer fill="#889" />
+            <LineSymbolizer stroke="#448" stroke-width="1"/>
+        </Rule>
+    </Style>
+
+    <Style name="amenities">
+        <Rule>
+            <Filter>[amenity] = 'parking'</Filter>
+            <PolygonSymbolizer fill="#eee" />
+        </Rule>
+    </Style>
+
+    <Layer name="areas" srs="+init=epsg:4326">
+        <StyleName>areas</StyleName>
+        <StyleName>water</StyleName>
+        <StyleName>land-use</StyleName>
+        <StyleName>amenities</StyleName>
+        <StyleName>buildings</StyleName>
+
         <Datasource>
             <Parameter name="type">shape</Parameter>
-            <Parameter name="file">ne_110m_admin_0_countries.shp</Parameter>
+            <Parameter name="file">finistere/multipolygons.shp</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="lines" srs="+init=epsg:4326">
+        <StyleName>lines</StyleName>
+        <StyleName>waterway-lines</StyleName>
+        <StyleName>roads-outline</StyleName>
+        <StyleName>roads-paths</StyleName>
+        <StyleName>roads-misc</StyleName>
+        <StyleName>roads-national</StyleName>
+        <Datasource>
+            <Parameter name="type">shape</Parameter>
+            <Parameter name="file">finistere/lines.shp</Parameter>
         </Datasource>
     </Layer>
 </Map>

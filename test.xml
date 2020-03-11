@@ -2,6 +2,7 @@
 <!-- <Map background-color="#efd" srs="+proj=lonlat"> -->
     <Style name="areas">
         <Rule>
+            <Filter>not [landuse]</Filter>
             <PolygonSymbolizer fill="#ebe9dc" />
         </Rule>
     </Style>
@@ -34,12 +35,12 @@
 
         <Rule>
             <Filter>[natural] = wetland</Filter>
-            <PolygonSymbolizer fill="#cdc"/>
+            <PolygonSymbolizer fill="#cdca"/>
         </Rule>
 
         <Rule>
             <Filter>[landuse] = military</Filter>
-            <PolygonSymbolizer fill="#faa5"/>
+            <PolygonSymbolizer fill="#faa" fill-opacity="0.5"/>
             <LineSymbolizer stroke="#a44" stroke-width="2"/>
         </Rule>
     </Style>
@@ -99,13 +100,16 @@
         <Rule>
             <Filter>[highway] = 'tertiary' or [highway] = 'residential' or [highway] = 'living_street'</Filter>
             <LineSymbolizer stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+            <TextSymbolizer face-name="DejaVu Sans Condensed" size="9" fill="#000" halo-fill="#fff" halo-radius="1" placement="line" spacing="500">[name]</TextSymbolizer>
         </Rule>
     </Style>
 
     <Style name="roads-national">
         <Rule>
-            <Filter>[highway] = 'secondary'</Filter>
+            <Filter>[highway] = 'secondary' or [highway] = 'secondary_link'</Filter>
             <LineSymbolizer stroke="#ff8" stroke-width="6"/>
+            <ShieldSymbolizer face-name="DejaVu Sans Condensed" size="15" file="icons/signs/road_dep.png" fill="#ddaa00" placement="line" spacing="500">[name]</ShieldSymbolizer>
+            <TextSymbolizer face-name="DejaVu Sans Condensed" size="11" fill="#000" halo-fill="#fff" halo-radius="1" placement="line" spacing="500">[name]</TextSymbolizer>
         </Rule>
     </Style>
 
@@ -131,7 +135,7 @@
         </Rule>
 
         <Rule>
-            <Filter>[highway] = 'secondary'</Filter>
+            <Filter>[highway] = 'secondary' or [highway] = 'secondary_link'</Filter>
             <LineSymbolizer stroke="#a90" stroke-width="7" stroke-linecap="round"/>
         </Rule>
     </Style>
@@ -140,7 +144,7 @@
         <Rule>
             <Filter>[building] = 'yes'</Filter>
             <PolygonSymbolizer fill="#999" />
-            <LineSymbolizer stroke="#666" stroke-width="1"/>
+            <LineSymbolizer stroke="#888" stroke-width="1"/>
         </Rule>
 
         <Rule>
@@ -169,6 +173,14 @@
         </Rule>
     </Style>
 
+    <Style name="hamlets">
+        <Rule>
+            <Filter>[place] = 'hamlet'</Filter>
+            <TextSymbolizer face-name="DejaVu Sans Condensed" size="11" fill="#000" halo-fill="#fff" halo-radius="1">[name]</TextSymbolizer>
+            <!-- <PointSymbolizer file="/home/herrcrazi/Images/svas.png" allow-overlap="yes" /> -->
+        </Rule>
+    </Style>
+
     <Layer name="areas" srs="+init=epsg:4326">
         <StyleName>areas</StyleName>
         <StyleName>water</StyleName>
@@ -192,6 +204,14 @@
         <Datasource>
             <Parameter name="type">shape</Parameter>
             <Parameter name="file">maps/finistere/lines.shp</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="points" srs="+init=epsg:4326">
+        <StyleName>hamlets</StyleName>
+        <Datasource>
+            <Parameter name="type">shape</Parameter>
+            <Parameter name="file">maps/finistere/points.shp</Parameter>
         </Datasource>
     </Layer>
 </Map>

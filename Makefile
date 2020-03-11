@@ -11,8 +11,13 @@ test: test.cpp
 	g++ $(CXXARGS) test.cpp -o test $(LDARGS) 
 	@echo Build ended.
 
-clear:
-	rm our_world.png
+clean:
+	rm *.png
+
+clear: clean
+	rm test
+
+remake: clear all
 
 update:
 	./test

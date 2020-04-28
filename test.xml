@@ -3,7 +3,7 @@
     <Style name="areas">
         <Rule>
             <Filter>not [landuse]</Filter>
-            <PolygonSymbolizer fill="#ebe9dc" />
+            <PolygonSymbolizer fill="#dbdfcc" />
         </Rule>
     </Style>
 
@@ -65,7 +65,7 @@
 
     <Style name="water">
         <Rule>
-            <Filter>[natural] = water or [other_tags].match('waterway')</Filter>
+            <Filter>[natural] = water or [tags].match('waterway')</Filter>
             <PolygonSymbolizer fill="#acf"/>
         </Rule>
 
@@ -153,11 +153,11 @@
             <LineSymbolizer stroke="#775" stroke-width="1"/>
         </Rule>
 
-        <Rule>
+        <!-- <Rule>
             <Filter>[historic] = 'fort'</Filter>
             <PolygonSymbolizer fill="#aa9" />
             <LineSymbolizer stroke="#775" stroke-width="3"/>
-        </Rule>
+        </Rule> -->
 
         <Rule>
             <Filter>[building] = 'school'</Filter>
@@ -181,18 +181,68 @@
         </Rule>
     </Style>
 
-    <Layer name="areas" srs="+init=epsg:4326">
+
+    <!-- Polygon debug boxes -->
+    <Style name="debug">
+        <Rule>
+            <!-- <PolygonSymbolizer fill="#ff00ff" fill-opacity="0.01"/> -->
+            <LineSymbolizer stroke="#ff00ff" stroke-width="0.5"/>
+        </Rule>
+    </Style>
+
+    <!-- Generic PostGIS datasource -->
+    <Datasource name="postgis-kartenn">
+        <Parameter name="type">postgis</Parameter>
+        <Parameter name="host">localhost</Parameter>
+        <Parameter name="dbname">kartenn-gis-dev</Parameter>
+        <Parameter name="user">herrcrazi</Parameter>      
+        <Parameter name="password">chenco</Parameter>
+        <Parameter name="srid">3857</Parameter>
+    </Datasource>
+
+    <!-- PostGis layers uses the Mercator projection -->
+    <Layer name="areas" srs="+init=epsg:3857">
+        <StyleName>areas</StyleName>
+        <StyleName>water</StyleName>
+        <StyleName>land-use</StyleName>
+
+        <Datasource base="postgis-kartenn">
+            <Parameter name="table">(select * from planet_osm_polygon) as landuse</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="amenities" srs="+init=epsg:3857">
+        <StyleName>amenities</StyleName>
+
+        <Datasource base="postgis-kartenn">
+            <Parameter name="table">(select way,amenity,tags from planet_osm_polygon where amenity is not null) as buildings</Parameter>
+        </Datasource>
+    </Layer>
+
+    <Layer name="buildings" srs="+init=epsg:3857">
+        <StyleName>buildings</StyleName>
+
+        <Datasource base="postgis-kartenn">
+            <Parameter name="table">
+            (
+                SELECT way,name,building FROM planet_osm_polygon as p  WHERE building IS NOT NULL
+            ) as buildings
+            </Parameter>
+        </Datasource>
+    </Layer>
+
+    <!-- <Layer name="debug" srs="+init=epsg:3857">
         <StyleName>areas</StyleName>
         <StyleName>water</StyleName>
         <StyleName>land-use</StyleName>
         <StyleName>amenities</StyleName>
         <StyleName>buildings</StyleName>
+        <StyleName>debug</StyleName>
 
-        <Datasource>
-            <Parameter name="type">shape</Parameter>
-            <Parameter name="file">maps/finistere/multipolygons.shp</Parameter>
+        <Datasource base="postgis-kartenn">
+            <Parameter name="table">(select * from planet_osm_polygon) as debug</Parameter>
         </Datasource>
-    </Layer>
+    </Layer> -->
 
     <Layer name="lines" srs="+init=epsg:4326">
         <StyleName>lines</StyleName>
